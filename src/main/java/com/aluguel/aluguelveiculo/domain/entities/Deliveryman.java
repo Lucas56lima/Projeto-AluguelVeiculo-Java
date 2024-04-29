@@ -1,4 +1,4 @@
-package com.aluguel.alguelveiculo.domain.entities;
+package com.aluguel.aluguelveiculo.domain.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
