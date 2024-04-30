@@ -1,16 +1,6 @@
 package com.aluguel.aluguelveiculo.domain.entities;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import java.util.Set;
@@ -33,7 +23,7 @@ public class Deliveryman {
     private String cnpj;
     
     @Column(nullable = false)
-    private  Date birthday = new Date();
+    private  Date birthday;
     
 
     @Column(unique = true, nullable = false)
@@ -52,7 +42,10 @@ public class Deliveryman {
     private String email;
     
     @Column(unique = true,nullable = false)
-    private String password;    
+    private String password;
+    
+    @CreationTimestamp
+    private Instant CreationTimestamp;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
@@ -85,12 +78,7 @@ public class Deliveryman {
 
     public void setLocation(boolean location) {
         this.location = location;
-    }
-
-    @CreationTimestamp
-    private Instant CreationTimestamp;
-
-
+    } 
 
     public Instant getCreationTimestamp() {
         return CreationTimestamp;
