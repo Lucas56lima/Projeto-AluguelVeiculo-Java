@@ -1,35 +1,58 @@
 package com.aluguel.aluguelveiculo.controllers;
-
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
+
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.aluguel.aluguelveiculo.domain.commands.DeliverymanCommand;
-import com.aluguel.aluguelveiculo.domain.interfaces.IDeliverymanService;
+import com.aluguel.aluguelveiculo.domain.entities.Deliveryman;
+import com.aluguel.aluguelveiculo.domain.interfaces.IDeliverymanRepository;
 
 import io.swagger.annotations.ApiOperation;
+import jakarta.transaction.Transactional;
 
 @RestController
 public class DeliverymanController {
-    private final IDeliverymanService deliverymanService;
+    private final IDeliverymanRepository repository;  
+   
+    public DeliverymanController(IDeliverymanRepository repository){
+        
+        this.repository = repository;
+    }
 
-    public DeliverymanController(IDeliverymanService deliverymanService){
-        this.deliverymanService = deliverymanService;
-    }    
+    @Transactional
     @PostMapping("/postdeliveryman")
     @ApiOperation(value = "Criar um novo entregador", notes = "Este endpoint cria um novo entregador com base nos dados fornecidos.")
-    public CompletableFuture<ResponseEntity<Void>>PostAsyncDeliveryman(@RequestBody DeliverymanCommand command){
-        try {
-            // Executar operação assíncrona e retornar o resultado diretamente
-            deliverymanService.PostAsyncDeliveryman(command);
-            // Retornar ResponseEntity com código de status 201 Created
-            return CompletableFuture.completedFuture(ResponseEntity.status(HttpStatus.CREATED).build());
-        } catch (Exception ex) {
-            // Em caso de erro, retornar ResponseEntity com código de status 500 Internal Server Error
-            return CompletableFuture.completedFuture(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
-        } 
+    public CompletableFuture<ResponseEntity<String>>PostAsyncDeliveryman(@RequestBody DeliverymanCommand command){
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                repository.save(command.toEntity());
+                return new ResponseEntity<>("Dados inseridos com sucesso", HttpStatus.CREATED);
+            } catch (Exception ex) {
+                return new ResponseEntity<>("Não foi possível inserir dados",HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        });        
+        
     }
+    
+    @Transactional
+    @GetMapping("/getdeliverman")
+    @ApiOperation(value = "Criar um novo entregador", notes = "Este endpoint recupera todos os cadastros.")
+        public CompletableFuture<ResponseEntity<List<Deliveryman>>>GetAsyncDeliveryman(){            
+            return CompletableFuture.supplyAsync(() -> {
+                try {
+                    List<Deliveryman> deliveryMans = repository.findAll();
+                    return new ResponseEntity<>(deliveryMans, HttpStatus.OK);
+                } catch (Exception ex) {
+                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                }
+            });
+        }
+
 }

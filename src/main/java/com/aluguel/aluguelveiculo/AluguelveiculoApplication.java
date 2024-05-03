@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication
-@ComponentScan(basePackages = {"com.aluguel.aluguelveiculo.domain.services"})
 
+@SpringBootApplication
+@ComponentScan(basePackages = {"entities","com.aluguel.aluguelveiculo.controllers"})
 public class AluguelveiculoApplication {
 
 	public static void main(String[] args) {

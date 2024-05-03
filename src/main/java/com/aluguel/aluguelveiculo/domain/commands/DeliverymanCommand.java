@@ -1,6 +1,9 @@
 package com.aluguel.aluguelveiculo.domain.commands;
 
 import java.util.UUID;
+
+import com.aluguel.aluguelveiculo.domain.entities.Deliveryman;
+
 import java.time.Instant;
 import java.util.Date;
 
@@ -22,7 +25,26 @@ public class DeliverymanCommand {
     
     private String archiveName;
 
-    private Instant CreationTimestamp;    
+    private Instant CreationTimestamp;
+    
+    private String email;
+    private String password;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getArchiveName() {
         return archiveName;
@@ -95,6 +117,21 @@ public class DeliverymanCommand {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
-    }   
+    }
+    
+    public Deliveryman toEntity(){
+        Deliveryman deliveryman = new Deliveryman();
+        deliveryman.setName(this.name);
+        deliveryman.setCnpj(this.cnpj);
+        deliveryman.setCnhNumber(this.cnhNumber);
+        deliveryman.setCnhType(this.cnhType);
+        deliveryman.setBirthday(this.birthday);
+        deliveryman.setEmail(this.email);
+        deliveryman.setPassword(this.password);
+        deliveryman.setArchiveName(this.archiveName);
+        deliveryman.setLocation(this.location);        
+
+        return deliveryman;
+    }
     
 }   
