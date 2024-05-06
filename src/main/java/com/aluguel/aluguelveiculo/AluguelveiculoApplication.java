@@ -13,6 +13,7 @@ public class AluguelveiculoApplication {
 		SpringApplication.run(AluguelveiculoApplication.class, args);
 		openSwaggerUI();
 	}	
+	@SuppressWarnings("deprecation")
 	private static void openSwaggerUI() {
 		try {
             Runtime.getRuntime().exec("cmd /c start http://localhost:8080/swagger-ui/index.html");

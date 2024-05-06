@@ -5,7 +5,8 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import java.util.Set;
 import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "tb_deliveryman")
@@ -23,7 +24,7 @@ public class Deliveryman {
     private String cnpj;
     
     @Column(nullable = false)
-    private  Date birthday;
+    private  LocalDate birthday;
     
 
     @Column(unique = true, nullable = false)
@@ -129,11 +130,11 @@ public class Deliveryman {
         this.name = name;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     } 
     

@@ -12,42 +12,38 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.aluguel.aluguelveiculo.domain.commands.DeliverymanCommand;
 import com.aluguel.aluguelveiculo.domain.entities.Deliveryman;
-import com.aluguel.aluguelveiculo.domain.interfaces.IDeliverymanRepository;
+import com.aluguel.aluguelveiculo.domain.interfaces.IDeliverymanService;
 
 import io.swagger.annotations.ApiOperation;
 import jakarta.transaction.Transactional;
 
 @RestController
 public class DeliverymanController {
-    private final IDeliverymanRepository repository;  
+    private final IDeliverymanService service;  
    
-    public DeliverymanController(IDeliverymanRepository repository){
+    public DeliverymanController(IDeliverymanService service){
         
-        this.repository = repository;
+        this.service = service;
     }
 
     @Transactional
     @PostMapping("/postdeliveryman")
     @ApiOperation(value = "Criar um novo entregador", notes = "Este endpoint cria um novo entregador com base nos dados fornecidos.")
-    public CompletableFuture<ResponseEntity<String>>PostAsyncDeliveryman(@RequestBody DeliverymanCommand command){
-        return CompletableFuture.supplyAsync(() -> {
-            try {
-                repository.save(command.toEntity());
-                return new ResponseEntity<>("Dados inseridos com sucesso", HttpStatus.CREATED);
-            } catch (Exception ex) {
-                return new ResponseEntity<>("Não foi possível inserir dados",HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+    public CompletableFuture<ResponseEntity<String>>postAsyncDeliveryman(@RequestBody DeliverymanCommand command){
+        return CompletableFuture.supplyAsync(() -> {            
+                service.save(command.toEntity());
+                return new ResponseEntity<>("Dados inseridos com sucesso", HttpStatus.CREATED);           
         });        
         
     }
     
     @Transactional
     @GetMapping("/getdeliverman")
-    @ApiOperation(value = "Criar um novo entregador", notes = "Este endpoint recupera todos os cadastros.")
-        public CompletableFuture<ResponseEntity<List<Deliveryman>>>GetAsyncDeliveryman(){            
+    @ApiOperation(value = "Lista todos os entregadores", notes = "Este endpoint recupera todos os cadastros.")
+        public CompletableFuture<ResponseEntity<List<Deliveryman>>>getAsyncDeliveryman(){            
             return CompletableFuture.supplyAsync(() -> {
                 try {
-                    List<Deliveryman> deliveryMans = repository.findAll();
+                    List<Deliveryman> deliveryMans = service.findAll();
                     return new ResponseEntity<>(deliveryMans, HttpStatus.OK);
                 } catch (Exception ex) {
                     return new ResponseEntity<>(HttpStatus.NOT_FOUND);

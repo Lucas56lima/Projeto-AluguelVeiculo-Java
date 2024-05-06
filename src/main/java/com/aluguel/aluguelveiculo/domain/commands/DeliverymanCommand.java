@@ -5,7 +5,8 @@ import java.util.UUID;
 import com.aluguel.aluguelveiculo.domain.entities.Deliveryman;
 
 import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDate;
+
 
 public class DeliverymanCommand {
    
@@ -15,7 +16,7 @@ public class DeliverymanCommand {
     
     private String cnpj;    
     
-    private  Date birthday = new Date();   
+    private  LocalDate birthday = LocalDate.now();   
     
     private String cnhNumber;   
     
@@ -111,11 +112,11 @@ public class DeliverymanCommand {
         this.name = name;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
     
