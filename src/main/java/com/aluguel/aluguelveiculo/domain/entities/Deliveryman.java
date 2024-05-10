@@ -31,7 +31,7 @@ public class Deliveryman {
     private String cnhNumber;
     
 
-    @Column(unique = true,nullable = false)
+    @Column(nullable = false)
     private String cnhType;
 
     @Column

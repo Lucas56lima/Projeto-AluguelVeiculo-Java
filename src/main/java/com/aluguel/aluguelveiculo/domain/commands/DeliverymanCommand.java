@@ -4,6 +4,9 @@ import java.util.UUID;
 
 import com.aluguel.aluguelveiculo.domain.entities.Deliveryman;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.Instant;
 import java.time.LocalDate;
 
@@ -12,23 +15,32 @@ public class DeliverymanCommand {
    
     private UUID deliverymanId;
     
+    @NotBlank
     private String name;   
     
+    @NotBlank
     private String cnpj;    
     
     private  LocalDate birthday = LocalDate.now();   
     
+    @NotBlank
     private String cnhNumber;   
     
+    @NotBlank
     private String cnhType;
 
+    @NotNull
     private boolean location = false;
     
+    @NotBlank
     private String archiveName;
 
     private Instant CreationTimestamp;
     
+    @NotBlank
     private String email;
+
+    @NotBlank
     private String password;
 
     public String getEmail() {

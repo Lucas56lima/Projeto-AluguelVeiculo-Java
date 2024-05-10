@@ -6,7 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"entities","com.aluguel.aluguelveiculo.controllers"})
+@ComponentScan(basePackages = {"entities","com.aluguel.aluguelveiculo.controllers","com.aluguel.aluguelveiculo.services"})
 public class AluguelveiculoApplication {
 
 	public static void main(String[] args) {
@@ -21,5 +21,4 @@ public class AluguelveiculoApplication {
             e.printStackTrace();
         }
     }
-
 }

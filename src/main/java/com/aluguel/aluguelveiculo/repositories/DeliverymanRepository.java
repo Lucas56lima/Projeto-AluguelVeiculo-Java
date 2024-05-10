@@ -1,26 +1,17 @@
 package com.aluguel.aluguelveiculo.repositories;
 
-import java.util.concurrent.CompletableFuture;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
-import com.aluguel.aluguelveiculo.domain.commands.DeliverymanCommand;
-import com.aluguel.aluguelveiculo.domain.interfaces.IDeliverymanRepository;
+import org.springframework.stereotype.Repository;
+// import java.util.concurrent.CompletableFuture;
+// import org.springframework.dao.DataAccessException;
+// import org.springframework.dao.DataAccessResourceFailureException;
+// import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.UUID;
+import com.aluguel.aluguelveiculo.domain.entities.Deliveryman;
+import java.util.Optional;
 
-import jakarta.transaction.Transactional;
-
-public class DeliverymanRepository{
-    @Autowired
-    private IDeliverymanRepository repository;
-    
-    @Async
-    @Transactional
-    public CompletableFuture<ResponseEntity<String>> PostAsyncDeliveryman(DeliverymanCommand command){
-               
-
-        repository.save(command.toEntity());
-
-        return CompletableFuture.completedFuture(ResponseEntity.ok().build());
-
-    }
+@Repository
+public interface DeliverymanRepository extends JpaRepository<Deliveryman, UUID>{
+    Optional<Deliveryman> findByCnpj(String cnpj);             
+        
 }
