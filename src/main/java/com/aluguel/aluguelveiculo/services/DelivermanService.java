@@ -20,7 +20,7 @@ public class DelivermanService{
    
     private Logger logger = LoggerFactory.getLogger(DelivermanService.class); 
     @Autowired
-    private DeliverymanRepository repository;
+    public DeliverymanRepository repository;
 
     /**
      * @param command entidade que possui características do Deliverycommand
